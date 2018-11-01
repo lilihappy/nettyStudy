@@ -2,19 +2,15 @@ package com.lili.study.netty.simple;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
-public class Client extends Thread {
+public class Client{
 
     public static String SERVER_DEFAULT_IP = "127.0.0.1";
     public static int SERVER_DEFAULT_PORT = 7777;
 
-    public void run() {
-        start(SERVER_DEFAULT_IP, SERVER_DEFAULT_PORT);
-    }
-
     private void start(String ip, int port) {
         Socket socket = null;
-        BufferedReader brSys = null;
         BufferedWriter bw = null;
         BufferedReader br = null;
         try {
@@ -22,8 +18,8 @@ public class Client extends Thread {
             System.out.println("======client与server连接成功=====");
 
             //获取控制台输入信息
-            brSys = new BufferedReader(new InputStreamReader(System.in));
-            String sysStr = brSys.readLine();
+            Scanner scanner = new Scanner(System.in);
+            String sysStr = scanner.nextLine();
 
             //给server发信息
             bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -57,14 +53,6 @@ public class Client extends Thread {
                 }
                 bw = null;
             }
-            if (brSys != null) {
-                try {
-                    brSys.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                brSys = null;
-            }
             if (socket != null) {
                 try {
                     socket.close();
@@ -78,6 +66,6 @@ public class Client extends Thread {
 
     public static void main(String[] args) {
         Client client = new Client();
-        client.start();
+        client.start(SERVER_DEFAULT_IP, SERVER_DEFAULT_PORT);
     }
 }

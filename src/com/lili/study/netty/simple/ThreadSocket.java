@@ -2,6 +2,7 @@ package com.lili.study.netty.simple;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class ThreadSocket extends Thread {
 
@@ -13,7 +14,6 @@ public class ThreadSocket extends Thread {
 
     public void run() {
         BufferedReader br = null;
-        BufferedReader brSys = null;
         BufferedWriter bw = null;
 
         try {
@@ -22,8 +22,8 @@ public class ThreadSocket extends Thread {
             System.out.println("接收Client信息：" + clientStr);
             socket.shutdownInput();
 
-            brSys = new BufferedReader(new InputStreamReader(System.in));
-            String sysStr = brSys.readLine();
+            Scanner scanner = new Scanner(System.in);
+            String sysStr = scanner.nextLine();
 
             bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             bw.write(sysStr);
@@ -41,14 +41,6 @@ public class ThreadSocket extends Thread {
                     e.printStackTrace();
                 }
                 bw = null;
-            }
-            if (brSys != null) {
-                try {
-                    brSys.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                brSys = null;
             }
             if (br != null) {
                 try {
