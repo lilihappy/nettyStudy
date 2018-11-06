@@ -85,7 +85,7 @@ public class Service {
                                 ByteBuffer writeByteBuffer = buffers.getWriteByteBuffer();
 
                                 writeByteBuffer.put("hello client".getBytes("UTF-8"));
-                                writeByteBuffer.flip();
+                                writeByteBuffer.flip();//flip方法  重新设置position和limit
 
                                 SocketChannel sc = (SocketChannel) key.channel();
                                 sc.write(writeByteBuffer);

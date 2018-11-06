@@ -67,7 +67,7 @@ public class Client {
 
                         if (key.isReadable()) {
                             sc.read(readByteBuffer);
-                            readByteBuffer.flip();
+                            readByteBuffer.flip();//flip方法  重新设置position和limit
 
                             CharBuffer cb = utf8.decode(readByteBuffer);
                             System.out.println("read server data:");
