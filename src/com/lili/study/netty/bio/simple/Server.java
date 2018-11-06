@@ -1,4 +1,4 @@
-package com.lili.study.netty.simple;
+package com.lili.study.netty.bio.simple;
 
 import java.net.ServerSocket;
 import java.net.Socket;

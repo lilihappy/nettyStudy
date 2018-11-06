@@ -1,19 +1,24 @@
-package com.lili.study.netty.enhance;
+package com.lili.study.netty.bio.enhance;
 
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class EnhanceClient {
+public class EnhanceServer {
 
-    public static String SERVER_DEFAULT_IP = "127.0.0.1";
-    public static int SERVER_DEFAULT_PORT = 7777;
+    public static int DEFAULT_PORT = 7777;
 
-    private void start(String ip, int port) {
+
+    public void start(int port) {
+
         try {
 
-            Socket socket = new Socket(ip, port);
-            System.out.println("======client与server连接成功=====");
+            ServerSocket serverSocket = new ServerSocket(port);
+            System.out.println("======启动Server...");
+
+            Socket socket = serverSocket.accept();
+            System.out.println("=====连接建立成功=====");
 
             DataInputStream is = new DataInputStream(socket.getInputStream());
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
@@ -21,12 +26,12 @@ public class EnhanceClient {
             Scanner scanner = new Scanner(System.in);
 
             while (true) {
+                String clientStr = is.readUTF();
+                System.out.println("接收Client信息：" + clientStr);
+
                 String sysStr = scanner.nextLine();
                 os.writeUTF(sysStr);
                 os.flush();
-
-                String serverStr = is.readUTF();
-                System.out.println("接收server信息：" + serverStr);
             }
 
 
@@ -36,8 +41,7 @@ public class EnhanceClient {
     }
 
     public static void main(String[] args) {
-
-        EnhanceClient client = new EnhanceClient();
-        client.start(SERVER_DEFAULT_IP, SERVER_DEFAULT_PORT);
+        EnhanceServer server = new EnhanceServer();
+        server.start(DEFAULT_PORT);
     }
 }
